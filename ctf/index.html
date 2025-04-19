@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./assets/web_icon.jpg" sizes="16x16" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Diffuse Or Die</title>
+</head>
+<body>
+    <h1>The Vanishing Truth</h1>
+    <div class="riddle"><p>In the vast expanse, many appear, <br>
+        But only one will be truly clear. <br>
+        A shift in space, a narrowing view, <br>
+        Will bring the right one into clue. <br>
+        Too wide, too lost, too many to see, <br>
+        Shrink your sight, and truth shall be. <br>
+        Seek the truth where frames collapse, <br>
+        A hidden path within the gaps.</p></div>
+        <br>
+        <hr>
+        <br>
+        <br>
+        <h2>Validate the Key here...</h2>
+        <textarea id="keyInput" placeholder="Enter your key..."></textarea><br>
+        <button onclick="validateKey()" >Validate</button>
+        <p id="message"></p>
+        <hr>
+
+        <div class="container"><button class="button"><a href="page2.html">Let's Solve</a></button></div>
+
+
+        <script>
+            async function validateKey() {
+                const userKey = document.getElementById("keyInput").value.trim();
+                const message = document.getElementById("message");
+    
+                const response = await fetch("/validate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ key: userKey })
+                });
+    
+                const result = await response.json();
+    
+                if (result.valid) {
+                    message.textContent = "Congrats you have made it! Now solve the Ceaser Cipher!";
+                    message.style.color = "lime";
+                } else {
+                    message.textContent = "You are good for nothing!";
+                    message.style.color = "red";
+                }
+            }
+        </script>
+    
+</body>
+</html>
+
